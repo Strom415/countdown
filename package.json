@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/Strom415/countdown#readme",
   "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "word-definition": "^2.1.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

@@ -57,9 +57,7 @@ const powerSet = (str) => {
   return set;
 };
 
-const dictionary = makeDictionary('./dictionary-max-9.txt');
-
-const realAnagrams = (str) => {
+const anagrams = (str, dictionary, callback) => {
   const matches = [];
   const pSet = powerSet(str);
 
@@ -73,8 +71,8 @@ const realAnagrams = (str) => {
     }
   }
 
-  return matches.sort((a, b) => b.length - a.length);
+  callback(matches.sort((a, b) => b.length - a.length));
 };
 
-const anas = realAnagrams('eepluochc');
-console.log('matches', anas);
+module.exports.anagrams = anagrams;
+module.exports.makeDictionary = makeDictionary;

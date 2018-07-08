@@ -10,3 +10,6 @@ public/
 ##heavy data
 all-words.txt
 words-lim9.txt
+
+##keys
+mw-config.js
