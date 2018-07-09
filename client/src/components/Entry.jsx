@@ -1,23 +1,16 @@
 import React from 'react';
 
-class Entry extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      entries: [],
-    };
-  }
-
-  render() {
-    return (
-      <div>
-        <form>
-          <input type="text" />
-          <submit />
-        </form>
-      </div>
-    );
-  }
-}
+const Entry = props => (
+  <div id="entries" className="column">
+    <form id="search" onSubmit={props.addEntry}>
+      <input type="text" 
+        value={props.entry} 
+        onChange={props.handleChange}
+      />
+      <button type="submit">Add</button>
+    </form>
+    {props.entries.map(entry => <div>{entry}</div>)}
+  </div>
+);
 
 export default Entry;

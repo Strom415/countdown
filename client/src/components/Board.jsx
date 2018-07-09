@@ -18,8 +18,14 @@ const Board = props => (
         <td>{props.letters[8]}</td>
       </tr>
     </table>
-    <h1 onClick={props.addVowel}>Vowel</h1>
-    <h1 onClick={props.addConsonent}>Consonent</h1>
+    <div id="container">
+      <div className="letter">
+        <h2  id="vowel" onClick={props.addVowel}>Vowel</h2 >
+      </div>
+      <div className="letter">
+        <h2  id="consonant" onClick={props.addConsonant}>Consonant</h2 >
+      </div>
+    </div>
     
   </div>
 );
