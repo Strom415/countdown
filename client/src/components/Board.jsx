@@ -23,14 +23,14 @@ const Board = props => (
       </tr>
     </table>
     <div id="container">
-      <div id="score">
+      {props.round === 'post' && <div id="score">
         <div>
-          Best Word
+          Best Word: <span className="best">{props.longest} </span>
         </div>
         <div>
-          Unique Words {props.uniques}
+          Unique Words: <span className="best">{props.uniques}</span>
         </div>
-      </div>
+      </div>}
       <div className="letter">
         <h2 id="vowel" onClick={props.addVowel}>Vowel</h2 >
       </div>

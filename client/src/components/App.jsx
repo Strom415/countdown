@@ -17,7 +17,8 @@ class App extends React.Component {
       entries: [],
       uniques: 0,
       showList: false,
-      best: '',
+      longest: '',
+      max: 0,
     };
     this.addVowel = this.addVowel.bind(this);
     this.addConsonant = this.addConsonant.bind(this);
@@ -132,10 +133,16 @@ class App extends React.Component {
   checkEntries() {
     const storage = {};
     let uniques = 0;
+    let max = 0;
+    let longest = '';
     for (let i = 0; i < this.state.entries.length; i++) {
       if (this.state.anagrams.includes(this.state.entries[i].word)) {
         if (!storage[this.state.entries[i].word]) {
           uniques++;
+        }
+        if (this.state.entries[i].word.length > max) {
+          max = this.state.entries[i].word.length;
+          longest = this.state.entries[i].word;
         }
         storage[this.state.entries[i].word] = true;
         this.state.entries[i].class = 'correct';
@@ -145,6 +152,8 @@ class App extends React.Component {
     }
     this.setState({
       uniques,
+      longest,
+      max,
     });
   }
 
@@ -159,6 +168,9 @@ class App extends React.Component {
           timer={this.state.timer} startTimer={this.startTimer}
           definition={this.state.definition}
           uniques={this.state.uniques}
+          longest={this.state.longest}
+          max={this.state.max}
+          round={this.state.round}
         />
         <div id="container">
           <Entry
@@ -179,5 +191,5 @@ class App extends React.Component {
     );
   }
 }
-//['ajshdhfud', 'auduosod', 'asdifji', 'asdfji', 'asduf', 'asdf', 'dsf', 'sdf]
+//['wordworth', 'warpathe', 'wrapper', 'willow', 'winow', 'trow', 'pow', 'ew']
 export default App;
