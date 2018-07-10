@@ -3,7 +3,6 @@ import axios from 'axios';
 import Board from './Board';
 import Entry from './Entry';
 import List from './List';
-import Timer from './Timer';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,12 +10,14 @@ class App extends React.Component {
     this.state = {
       letters: [],
       anagrams: [],
-      definition: '',
-      pos: '',
+      definition: { pos: 'click a word for definition' },
       timer: 30,
       round: 'pre',
       entry: '',
       entries: [],
+      uniques: 0,
+      showList: false,
+      best: '',
     };
     this.addVowel = this.addVowel.bind(this);
     this.addConsonant = this.addConsonant.bind(this);
@@ -44,8 +45,7 @@ class App extends React.Component {
       console.log('request was made', res.data);
       console.log(this);
       this.setState({
-        pos: res.data.category,
-        definition: res.data.definition,
+        definition: { word: res.data.word, pos: res.data.category, def: res.data.definition },
       });
     });
   }
@@ -53,7 +53,7 @@ class App extends React.Component {
   addEntry(e) {
     if (this.state.round === 'active') {
       this.setState({
-        entries: [this.state.entry].concat(this.state.entries),
+        entries: [{ word: this.state.entry.toLowerCase(), class: 'entry' }].concat(this.state.entries),
         entry: '',
       });
     }
@@ -91,15 +91,18 @@ class App extends React.Component {
     this.setState({
       round: 'pre',
       anagrams: [],
-      definition: '',
+      definition: { pos: 'click a word for definition' },
       entries: [],
       letters: [],
       timer: 30,
+      showList: false,
     });
   }
 
   startTimer() {
     if (this.state.round !== 'active') {
+      this.getAnagrams();
+      document.getElementById('input').focus();
       this.setState({
         round: 'active',
       });
@@ -112,8 +115,10 @@ class App extends React.Component {
 
         if (this.state.timer === 0) {
           clearInterval(timer);
+          this.checkEntries();
           this.setState({
             round: 'post',
+            showList: true,
           });
           return;
         }
@@ -124,33 +129,55 @@ class App extends React.Component {
     }
   }
 
+  checkEntries() {
+    const storage = {};
+    let uniques = 0;
+    for (let i = 0; i < this.state.entries.length; i++) {
+      if (this.state.anagrams.includes(this.state.entries[i].word)) {
+        if (!storage[this.state.entries[i].word]) {
+          uniques++;
+        }
+        storage[this.state.entries[i].word] = true;
+        this.state.entries[i].class = 'correct';
+      } else {
+        this.state.entries[i].class = 'wrong';
+      }
+    }
+    this.setState({
+      uniques,
+    });
+  }
+
   render() {
     return (
       <div>
-        <Timer timer={this.state.timer} startTimer={this.startTimer} />
         <Board
           addVowel={this.addVowel}
           addConsonant={this.addConsonant}
           reset={this.reset}
           letters={this.state.letters}
+          timer={this.state.timer} startTimer={this.startTimer}
+          definition={this.state.definition}
+          uniques={this.state.uniques}
         />
-        <div>definition: {this.state.pos} - {this.state.definition}</div>
         <div id="container">
           <Entry
             entry={this.state.entry}
             entries={this.state.entries}
             addEntry={this.addEntry}
             handleChange={this.handleChange}
+            focus={this.state.focus}
           />
-          <List
+          { this.state.showList && <List
             anagrams={this.state.anagrams}
             getDefinition={this.getDefinition}
             getAnagrams={this.getAnagrams}
-          />
+            showList={this.state}
+          />}
         </div>
       </div>
     );
   }
 }
-
+//['ajshdhfud', 'auduosod', 'asdifji', 'asdfji', 'asduf', 'asdf', 'dsf', 'sdf]
 export default App;

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,800');
+@import url('https://fonts.googleapis.com/css?family=Chela+One');
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -23,24 +26,47 @@ h2 {
   text-align: center;
 }
 
-.button {
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  background-color: #45eba5;
-  width: 170px;
-  margin: 10px;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  cursor: pointer;
-}
-
 .anagram {
   padding: 2px;
   cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
 }
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 5;
+}
+
+.tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.anagram:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 
 .letter {
   display: inline-block;
@@ -49,20 +75,128 @@ h2 {
   cursor: pointer;
   vertical-align: top;
   width: 50%;
- 
+  font-family: 'Chela One', cursive;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 
-.letter, #vowel {
- 
+#vowel {
+   border: 1px solid black;
+   background-color: #45eba5;
+   color: black;
+   height:60px;
+   width:200px;
+   border-radius: 7px;
+   padding-top:10px;
+   margin-left: 280px;
+   -webkit-user-select:none;
+   -moz-user-select:none;
+   -ms-user-select:none;
+   user-select:none;
+   transition: all .3s ease-in-out;
 }
 
-.letter #consonant {
- 
+#vowel:hover { 
+  border: 1px solid #21aba5;
+  background-color: #163a5f;
+  transform: scale(1.05);
+  color: white;
+}
+
+
+#consonant {
+   border: 1px solid black;
+   background-color: #45eba5;
+   color: black;
+   height:60px;
+   width:275px;
+   border-radius: 7px;
+   margin-left: -10px;
+   padding-top:10px;
+   transition: all .3s ease-in-out;
+}
+
+#consonant:hover { 
+  border: 1px solid #21aba5;
+  background-color: #163a5f;
+  transform: scale(1.05);
+  color: white;
 }
 
 #board {
   margin-left: auto;
   margin-right: auto;
+}
+
+#timer {
+  border: 2px solid black;
+  background-color: #45eba5;
+  height:150px; width:150px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  text-align: center;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  transition: all .3s ease-in-out;
+  border-radius: 5px;
+}
+
+#timer:hover { 
+  border: 2px solid black;
+  background-color: #163a5f;
+  transform: scale(1.05);
+  color: white;
+}
+
+/* #timer:hover #start {
+ color: white;
+}
+
+#timer:hover #num {
+  color: white;
+ } */
+
+ .button {
+  font-family: 'Chela One', cursive;
+  position: absolute;
+  border: 1px solid black;
+  background-color: #45eba5;
+  width: 170px;
+  margin-left: 1088px;
+  margin-top: -75px;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  transition: all .3s ease-in-out;
+  border-radius: 4px;
+}
+
+.button:hover {
+  color: white;
+  background-color: #163a5f;
+  transform: scale(1.05);
+ }
+
+#start {
+  padding-top: 15px;
+  font-size: 30px;
+  font-family: 'Chela One', cursive;
+}
+
+#num {
+  font-size: 90px;
+  font-family: 'Chela One', cursive;
 }
 
 #search {
@@ -89,7 +223,10 @@ h2 {
   box-sizing: border-box;
   font-size: 0.875rem;
   padding: 0 60px 0 12px;
-  width: 100%
+  width: 100%;
+  text-align: right;
+  color: #163a5f;
+  font-size: 20px;
 }
 
 #search button {
@@ -107,35 +244,98 @@ h2 {
 #container {
   max-width: 1024px;
   margin: auto;
-  /* background-color: pink; */
   padding: 0;
+  position: relative;
 }
 
 .column {
   display: inline-block;
   vertical-align: top;
   width: 50%;
+  position: relative;
+  float: left;
+}
+
+.correct {
+  font-weight: bold;
+  font-size: 30px;
+  font-weight: 800;
+  padding: 6px;
+  text-align: right;
+  margin-right: 200px;
+}
+
+.wrong {
+  text-decoration: line-through;
+  color:#ff5e42;
+  font-size: 30px;
+  font-weight: 800;
+  padding: 6px;
+  text-align: right;
+  margin-right: 200px;
+}
+
+.entry {
+  font-size: 30px;
+  font-weight: 800;
+  padding: 6px;
+  text-align: right;
+  margin-right: 200px;
 }
 
 #entries {
   position: relative;
   width: 400px;
-  color: #45eba5;
+  color: #163a5f;;
+  left: -100px;
 }
 
 #list {
   background-color: #163a5f;
   color: white;
-  position: relative;
-  float: right;
-  width: 200px;
+  position: absolute;
+  float: left;
+  width: auto;
+  left: 240px;
   letter-spacing: 2px;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 200;
-  margin-right: 200px;
+  border-radius: 5px;
 }
 
 #words {
  text-align: center;
- padding-top: 25px;
+ padding-top: 20px;
+ position: relative;
+ float: left;
+}
+
+.listCol {
+  display: inline;
+  width: auto;
+  float:left;
+  position: relative;
+}
+#defContainer {
+  width: 1300px;
+  font-size: 22px;
+  margin: auto;
+  text-align: center;
+}
+
+#word {
+  font-weight: bold;
+}
+
+#pos {
+  font-style: italic;
+  font-size: 16px;
+}
+
+#def {
+  font-size: 18px;
+}
+
+#score {
+  position: absolute;
 }
