@@ -3,6 +3,11 @@ import Timer from './Timer';
 
 const Board = props => (
   <div>
+    {props.round === 'pre' && <div id="instructions">
+      <p>INSTRUCTIONS: </p> 
+      <p>Add 9 letters by clicking the vowel & consonant buttons below</p> 
+      <p>Click Start to begin the round</p>
+    </div>}
     <div id="timer">
       <Timer timer={props.timer} startTimer={props.startTimer} />
     </div>

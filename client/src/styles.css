@@ -154,6 +154,10 @@ h2 {
   color: white;
 }
 
+#timer:active {
+  background-color:tomato;
+}
+
 /* #timer:hover #start {
  color: white;
 }
@@ -344,6 +348,15 @@ h2 {
   top: 5px;
   left: -65px;
   font-size: 30px;
+}
+
+#instructions {
+  float: left;
+  font-family: "Courier New", Courier, monospace;
+  font-style: italic;
+  font-weight: bold;
+  margin-left: 26px;
+  margin-top: 15px;
 }
 
 .best {

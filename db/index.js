@@ -1,78 +1,53 @@
-const fs = require("fs");
+const fs = require('fs');
 
-const makeDictionary = (file) => {
-  const dictionary = {};
-  let words = fs.readFileSync(file);
-  words = (words + '').split('\n');
-  words = words.map(word => word.trim());
+function Dictionary(file) {
+  const words = fs.readFileSync(file, 'utf8').split('\n');
+  words.forEach((word) => { this[word.trim()] = 1; });
+}
 
-  for (let i = 0; i < words.length; i++) {
-    dictionary[words[i]] = true;
-  }
-  return dictionary;
-};
+function findAnagrams(string) {
+  const anagrams = {};
 
-const allAnagrams = (string) => {
-  const uniqueOutput = {};
-
-  const anagram = (ana, str) => {
-    if (str === '') { uniqueOutput[ana] = 1; }
+  const recurse = (ana, str) => {
+    if (str === '') { anagrams[ana] = 1; }
 
     for (let i = 0; i < str.length; i++) {
-      anagram(ana + str[i], str.slice(0, i) + str.slice(i + 1));
+      recurse(ana + str[i], str.slice(0, i) + str.slice(i + 1));
     }
   };
+  recurse('', string);
 
-  anagram('', string);
+  return Object.keys(anagrams);
+}
 
-  return Object.keys(uniqueOutput);
-};
+function getPowerSet(str = '') {
+  const set = new Set();
 
-const powerSet = (str) => {
-  const set = [];
-  const hash = {};
-  if (!str) { str = ''; }
-  str = str.split('').sort();
-
-  // recursive through the sub sets
   const recurse = (strSet) => {
-    const joined = strSet.join('');
-
-    // check if we have visited this combo
-    if (hash[joined]) { return; }
-    hash[joined] = true;
-    set.push(joined);
-
-    // don't recurse to empty set - add it once at the end
+    set.add(strSet.join(''));
     if (strSet.length === 1) { return; }
 
-    // recurse all subsets
     for (let i = 0; i < strSet.length; i++) {
       const subSet = strSet.slice(0, i).concat(strSet.slice(i + 1));
       recurse(subSet);
     }
   };
-  recurse(str);
+  recurse(str.split(''));
 
-  return set;
-};
+  return Array.from(set);
+}
 
-const anagrams = (str, dictionary, callback) => {
+function findAllAnagrams(str, dictionary, callback) {
   const matches = [];
-  const pSet = powerSet(str);
 
-  for (let i = 0; i < pSet.length; i++) {
-    const current = allAnagrams(pSet[i]);
+  getPowerSet(str).forEach((subset) => {
+    findAnagrams(subset).forEach((anagram) => {
+      if (dictionary[anagram] === 1) { matches.push(anagram); }
+    });
+  });
 
-    for (let j = 0; j < current.length; j++) {
-      if (dictionary[current[j]]) {
-        matches.push(current[j]);
-      }
-    }
-  }
+  callback(matches);
+}
 
-  callback(matches.sort((a, b) => b.length - a.length));
-};
-
-module.exports.anagrams = anagrams;
-module.exports.makeDictionary = makeDictionary;
+module.exports.findAllAnagrams = findAllAnagrams;
+module.exports.Dictionary = Dictionary;

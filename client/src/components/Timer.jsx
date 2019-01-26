@@ -1,8 +1,8 @@
 import React from 'react';
 
 const Timer = props => (
-  <div>
-    <div id="start" onClick={props.startTimer}>
+  <div onClick={props.startTimer}>
+    <div id="start">
       Start
     </div>
     <div id="num">

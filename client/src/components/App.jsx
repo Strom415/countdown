@@ -11,7 +11,7 @@ class App extends React.Component {
       letters: [],
       anagrams: [],
       definition: { pos: 'click a word for definition' },
-      timer: 30,
+      timer: 45,
       round: 'pre',
       entry: '',
       entries: [],
@@ -95,7 +95,7 @@ class App extends React.Component {
       definition: { pos: 'click a word for definition' },
       entries: [],
       letters: [],
-      timer: 30,
+      timer: 45,
       showList: false,
     });
   }
@@ -180,12 +180,12 @@ class App extends React.Component {
             handleChange={this.handleChange}
             focus={this.state.focus}
           />
-          { this.state.showList && <List
-            anagrams={this.state.anagrams}
-            getDefinition={this.getDefinition}
-            getAnagrams={this.getAnagrams}
-            showList={this.state}
-          />}
+            { this.state.showList && <List
+              anagrams={this.state.anagrams}
+              getDefinition={this.getDefinition}
+              getAnagrams={this.getAnagrams}
+              showList={this.state}
+            />}
         </div>
       </div>
     );
