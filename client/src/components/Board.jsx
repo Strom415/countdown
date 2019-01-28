@@ -31,13 +31,13 @@ const Board = ({
     </table>
     <div id="container">
       { round === 'post' && <Scoreboard longest={longest} uniques={uniques} /> }
-      <div className="letter">
-        <h2 id="vowel" onClick={addLetter} onKeyPress={addLetter}>
+      <div className="letterButtonContainer">
+        <h2 className="letterButton" id="vowel" onClick={addLetter} onKeyPress={addLetter}>
           Vowel
         </h2>
       </div>
-      <div className="letter">
-        <h2  id="consonant" onClick={addLetter} onKeyPress={addLetter}>
+      <div className="letterButtonContainer">
+        <h2  className="letterButton" id="consonant" onClick={addLetter} onKeyPress={addLetter}>
           Consonant
         </h2>
       </div>

@@ -17,10 +17,12 @@ const Entry = ({
         Add
       </button>
     </form>
-    { entries.map(ele => (
-      <div className={ele.class}>
-        {ele.word}
-      </div>)) }
+    <div className="allEntries">
+      { entries.map(ele => (
+        <div className={ele.class}>
+          {ele.word}
+        </div>)) }
+    </div>
   </div>
 );
 

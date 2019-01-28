@@ -26,184 +26,74 @@ h2 {
 }
 
 div:focus {
-  outline:0;
-}
-
-.anagram {
-  padding: 2px;
-  cursor: pointer;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-.tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: 5;
-}
-
-.tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.anagram:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-
-
-.letter {
-  display: inline-block;
-  color: #45eba5;
-  font-size: 30px;
-  cursor: pointer;
-  vertical-align: top;
-  width: 50%;
-  font-family: 'Chela One', cursive;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-}
-
-#vowel {
-   border: 1px solid black;
-   background-color: #45eba5;
-   color: black;
-   height:60px;
-   width:200px;
-   border-radius: 7px;
-   padding-top:10px;
-   margin-left: 280px;
-   -webkit-user-select:none;
-   -moz-user-select:none;
-   -ms-user-select:none;
-   user-select:none;
-   transition: all .3s ease-in-out;
-}
-
-#vowel:hover { 
-  border: 1px solid #21aba5;
-  background-color: #163a5f;
-  transform: scale(1.05);
-  color: white;
-}
-
-
-#consonant {
-   border: 1px solid black;
-   background-color: #45eba5;
-   color: black;
-   height:60px;
-   width:275px;
-   border-radius: 7px;
-   margin-left: -10px;
-   padding-top:10px;
-   transition: all .3s ease-in-out;
-}
-
-#consonant:hover { 
-  border: 1px solid #21aba5;
-  background-color: #163a5f;
-  transform: scale(1.05);
-  color: white;
+  outline: 0;
 }
 
 #board {
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
 }
 
-#timer {
-  border: 2px solid black;
-  background-color: #45eba5;
-  height:150px; width:150px;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  cursor: pointer;
+#consonent {
+  margin-left: -10px;
+}
+
+#container {
+  max-width: 1024px;
+  margin: auto;
+  padding: 0;
+  position: relative;
+}
+
+#def {
+  font-size: 18px;
+}
+
+#defContainer {
+  width: auto;
+  font-size: 22px;
+  margin: auto;
   text-align: center;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  transition: all .3s ease-in-out;
-  border-radius: 5px;
+  padding-bottom: 25px;
 }
 
-#timer:hover { 
-  border: 2px solid black;
+#entries {
+  color: #163a5f;
+  left: -100px;
+  position: relative;
+  width: 400px;
+}
+
+#list {
+  font-family: Arial, Helvetica, sans-serif;
   background-color: #163a5f;
-  transform: scale(1.05);
   color: white;
-}
-
-#timer:active {
-  background-color:tomato;
-}
-
-/* #timer:hover #start {
- color: white;
-}
-
-#timer:hover #num {
-  color: white;
- } */
-
- .button {
-  font-family: 'Chela One', cursive;
   position: absolute;
-  border: 1px solid black;
-  background-color: #45eba5;
-  width: 170px;
-  margin-left: 1088px;
-  margin-top: -75px;
-  padding-left: 8px;
-  padding-right: 8px;
-  cursor: pointer;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  transition: all .3s ease-in-out;
-  border-radius: 4px;
-}
-
-.button:hover {
-  color: white;
-  background-color: #163a5f;
-  transform: scale(1.05);
- }
-
-#start {
-  padding-top: 15px;
-  font-size: 30px;
-  font-family: 'Chela One', cursive;
+  float: left;
+  width: auto;
+  left: 240px;
+  letter-spacing: 2px;
+  font-size: 18px;
+  font-weight: 200;
+  border-radius: 5px;
 }
 
 #num {
   font-size: 75px;
   font-family: 'Chela One', cursive;
+}
+
+#pos {
+  font-style: italic;
+  font-size: 16px;
+}
+
+#score {
+  font-family: 'Chela One', cursive;
+  position: absolute;
+  padding: 10px;
+  top: 5px;
+  left: -65px;
+  font-size: 30px;
 }
 
 #search {
@@ -248,67 +138,43 @@ div:focus {
   width: 48px;
 }
 
-#container {
-  max-width: 1024px;
-  margin: auto;
-  padding: 0;
-  position: relative;
-}
-
-.column {
-  display: inline-block;
-  vertical-align: top;
-  width: 50%;
-  position: relative;
-  float: left;
-}
-
-.correct {
-  font-weight: bold;
+#start {
+  padding-top: 15px;
   font-size: 30px;
-  font-weight: 800;
-  padding: 6px;
-  text-align: right;
-  margin-right: 200px;
+  font-family: 'Chela One', cursive;
 }
 
-.wrong {
-  text-decoration: line-through;
-  color:#ff5e42;
-  font-size: 30px;
-  font-weight: 800;
-  padding: 6px;
-  text-align: right;
-  margin-right: 200px;
-}
-
-.entry {
-  font-size: 30px;
-  font-weight: 800;
-  padding: 6px;
-  text-align: right;
-  margin-right: 200px;
-}
-
-#entries {
-  position: relative;
-  width: 400px;
-  color: #163a5f;;
-  left: -100px;
-}
-
-#list {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #163a5f;
-  color: white;
-  position: absolute;
-  float: left;
-  width: auto;
-  left: 240px;
-  letter-spacing: 2px;
-  font-size: 18px;
-  font-weight: 200;
+#timer {
+  border: 2px solid black;
+  background-color: #45eba5;
+  height:150px; width:150px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  text-align: center;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  transition: all .3s ease-in-out;
   border-radius: 5px;
+}
+
+#timer:hover { 
+  border: 2px solid black;
+  background-color: #163a5f;
+  transform: scale(1.05);
+  color: white;
+}
+
+#timer:active {
+  background-color:tomato;
+}
+
+#word {
+  font-weight: bold;
 }
 
 #words {
@@ -318,50 +184,105 @@ div:focus {
  float: left;
 }
 
+#vowel {
+  margin-left: 280px;
+  width: 200px;
+}
+
+.anagram {
+  padding: 2px 15px 2px 15px;
+  cursor: pointer;
+}
+
+.letterButtonContainer {
+  display: inline-block;
+  color: #45eba5;
+  font-size: 30px;
+  cursor: pointer;
+  vertical-align: top;
+  width: 50%;
+  font-family: 'Chela One', cursive;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
+.letterButton {
+  border: 1px solid black;
+  background-color: #45eba5;
+  color: black;
+  height:60px;
+  width:275px;
+  border-radius: 7px;
+  padding-top:10px;
+  transition: all .3s ease-in-out;
+}
+
+.letterButton:hover { 
+  border: 1px solid #21aba5;
+  background-color: #163a5f;
+  transform: scale(1.05);
+  color: white;
+}
+
+.button {
+  font-family: 'Chela One', cursive;
+  position: absolute;
+  border: 1px solid black;
+  background-color: #45eba5;
+  width: 170px;
+  margin-left: 1088px;
+  margin-top: -75px;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  transition: all .3s ease-in-out;
+  border-radius: 4px;
+}
+
+.button:hover {
+  color: white;
+  background-color: #163a5f;
+  transform: scale(1.05);
+ }
+
+.column {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  position: relative;
+  float: left;
+}
+
+.allEntries {
+  font-size: 30px;
+  font-weight: 800;
+  padding-top: 6px;
+  text-align: right;
+  margin-right: 200px;
+}
+
+.correct {
+  font-weight: bold;
+}
+
+.wrong {
+  text-decoration: line-through;
+  color:#ff5e42;
+}
+
 .listCol {
   display: inline;
   width: auto;
   float:left;
   position: relative;
 }
-#defContainer {
-  width: auto;
-  font-size: 22px;
-  margin: auto;
-  text-align: center;
-  padding-bottom: 5px;
-}
 
-#word {
-  font-weight: bold;
-}
-
-#pos {
-  font-style: italic;
-  font-size: 16px;
-}
-
-#def {
-  font-size: 18px;
-}
-
-#score {
-  font-family: 'Chela One', cursive;
-  position: absolute;
-  padding: 10px;
-  top: 5px;
-  left: -65px;
-  font-size: 30px;
-}
-
-#instructions {
-  float: left;
-  font-family: "Courier New", Courier, monospace;
-  font-style: italic;
-  font-weight: bold;
-  margin-left: 26px;
-  margin-top: 15px;
-}
 
 .best {
   color: #45eba5; 
