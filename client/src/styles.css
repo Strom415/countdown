@@ -34,7 +34,20 @@ div:focus {
 }
 
 #consonent {
-  margin-left: -10px;
+  margin-left: 100px;
+}
+
+#autofill {
+  font-size: 30px;
+  height: 40px;
+  width: 150px;
+  border-radius: 7px;
+  margin-top: 40px;
+}
+
+#vowel {
+  margin-left: 300px;
+  width: 200px;
 }
 
 #container {
@@ -184,11 +197,6 @@ div:focus {
  float: left;
 }
 
-#vowel {
-  margin-left: 280px;
-  width: 200px;
-}
-
 .anagram {
   padding: 2px 15px 2px 15px;
   cursor: pointer;
@@ -200,7 +208,7 @@ div:focus {
   font-size: 30px;
   cursor: pointer;
   vertical-align: top;
-  width: 50%;
+  /* width: 30%; */
   font-family: 'Chela One', cursive;
   -webkit-user-select:none;
   -moz-user-select:none;
@@ -215,6 +223,7 @@ div:focus {
   height:60px;
   width:275px;
   border-radius: 7px;
+  margin-left: 15px;
   padding-top:10px;
   transition: all .3s ease-in-out;
 }
@@ -262,7 +271,7 @@ div:focus {
 .allEntries {
   font-size: 30px;
   font-weight: 800;
-  padding-top: 6px;
+  padding-top: 12px;
   text-align: right;
   margin-right: 200px;
 }

@@ -15,7 +15,7 @@ const List = ({ anagrams, getDefinition }) => (
         if (column.length > 0) {
           return (
             <div className="listCol">
-              {i}
+              {i + 1}
               { column.map(word => (
                 <div
                   className="anagram"

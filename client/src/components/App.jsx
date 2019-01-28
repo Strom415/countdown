@@ -21,6 +21,7 @@ class App extends React.Component {
 
     this.addEntry = this.addEntry.bind(this);
     this.addLetter = this.addLetter.bind(this);
+    this.autofill = this.autofill.bind(this);
     this.getAnagrams = this.getAnagrams.bind(this);
     this.getDefinition = this.getDefinition.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -46,7 +47,7 @@ class App extends React.Component {
     });
   }
 
-  addLetter(e) {
+  addLetter(e, cb) {
     const { letters } = this.state;
     const pool = e.target.id === 'vowel'
       ? ['A', 'A', 'A', 'A', 'A', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'O', 'O', 'O', 'O', 'U', 'U']
@@ -54,7 +55,13 @@ class App extends React.Component {
     const num = Math.floor(Math.random() * pool.length);
     // const occurences = letters.filter(letter => letter === pool[num]).length;
 
-    if (letters.length < 9) { this.setState({ letters: letters.concat(pool[num]) }); }
+    if (letters.length < 9) { this.setState({ letters: letters.concat(pool[num]) }, cb); }
+  }
+
+  autofill(counter = 9) {
+    if (counter < 1) { return; }
+    const pool = Math.floor(Math.random() * 2) === 1 ? { target: { id: 'con' } } : { target: { id: 'vowel' } };
+    this.addLetter(pool, this.autofill.bind(this, counter - 1));
   }
 
   handleChange(e) {
@@ -88,8 +95,8 @@ class App extends React.Component {
   startTimer() {
     const { letters, round } = this.state;
     if (round === 'pre' && letters.length === 9) {
-      this.getAnagrams();
       document.getElementById('input').focus();
+      this.getAnagrams();
       this.setState({ round: 'active', definition: { pos: 'good luck' } });
       this.intervalHandle = setInterval(this.tick, 1000);
     }
@@ -107,10 +114,7 @@ class App extends React.Component {
         return { class: 'correct', word: entry.word };
       } return { class: 'wrong', word: entry.word };
     });
-
-    this.setState({
-      entries, longest, uniques: set.size,
-    });
+    this.setState({ entries, longest, uniques: set.size });
   }
 
   reset() {
@@ -120,7 +124,7 @@ class App extends React.Component {
       definition: { word: 'Add 9 letters by clicking the vowel & consonant buttons above. Click Start to begin the round' },
       entries: [],
       letters: [],
-      timer: 45,
+      timer: 1,
     });
   }
 
@@ -132,6 +136,7 @@ class App extends React.Component {
       <div>
         <Board
           addLetter={this.addLetter}
+          autofill={this.autofill}
           definition={definition}
           letters={letters}
           longest={longest}

@@ -4,7 +4,7 @@ import Scoreboard from './Scoreboard';
 import Timer from './Timer';
 
 const Board = ({
-  addLetter, definition, letters, longest, timer, reset, round, startTimer, uniques,
+  addLetter, autofill, definition, letters, longest, timer, reset, round, startTimer, uniques,
 }) => (
   <div>
     <div id="timer">
@@ -41,6 +41,11 @@ const Board = ({
           Consonant
         </h2>
       </div>
+      <div className="letterButtonContainer">
+        <h2  className="letterButton" id="autofill" onClick={autofill} onKeyPress={autofill}>
+          Autofill
+        </h2>
+      </div>
     </div>
     <div id="defContainer">
       <span id="word">{definition.word} </span>
@@ -52,6 +57,7 @@ const Board = ({
 
 Board.propTypes = {
   addLetter: PropTypes.func.isRequired,
+  autofill: PropTypes.func.isRequired,
   definition: PropTypes.objectOf(PropTypes.string).isRequired,
   letters: PropTypes.arrayOf(PropTypes.string).isRequired,
   longest: PropTypes.string.isRequired,
