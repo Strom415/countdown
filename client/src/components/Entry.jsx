@@ -10,7 +10,9 @@ const Entry = props => (
         value={props.entry} 
         onChange={props.handleChange}
       />
-      <button type="submit">Add</button>
+      <button type="submit">
+        Add
+      </button>
     </form>
     {props.entries.map(entry => <div className={entry.class}>{entry.word}</div>)}
   </div>

@@ -38,15 +38,15 @@ function getPowerSet(str = '') {
 }
 
 function findAllAnagrams(str, dictionary, callback) {
-  const matches = [];
+  const matches = {};
 
   getPowerSet(str).forEach((subset) => {
     findAnagrams(subset).forEach((anagram) => {
-      if (dictionary[anagram] === 1) { matches.push(anagram); }
+      if (dictionary[anagram] === 1) { matches[anagram] = 1; }
     });
   });
 
-  callback(matches);
+  callback(Object.keys(matches));
 }
 
 module.exports.findAllAnagrams = findAllAnagrams;

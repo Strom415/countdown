@@ -17,7 +17,7 @@ class App extends React.Component {
       max: 0,
       round: 'pre',
       showList: false,
-      timer: 15,
+      timer: 2,
       uniques: 0,
     };
 
@@ -100,9 +100,7 @@ class App extends React.Component {
         round: 'post',
         showList: true,
       });
-      return;
-    }
-    this.setState({ timer: this.state.timer - 1 });
+    } else { this.setState({ timer: this.state.timer - 1 }); }
   }
 
   startTimer() {
@@ -110,7 +108,6 @@ class App extends React.Component {
       this.getAnagrams();
       document.getElementById('input').focus();
       this.setState({ round: 'active', definition: { pos: 'good luck' } });
-
       this.intervalHandle = setInterval(this.tick, 1000);
     }
   }
@@ -125,9 +122,7 @@ class App extends React.Component {
         set.add(entry.word);
         entry.class = 'correct';
         if (entry.word.length > longest.length) { longest = entry.word; }
-      } else {
-        entry.class = 'wrong';
-      }
+      } else { entry.class = 'wrong'; }
     });
 
     this.setState({
@@ -158,16 +153,16 @@ class App extends React.Component {
             handleChange={this.handleChange}
             focus={this.state.focus}
           />
-            { this.state.showList && <List
+          { this.state.showList && (
+            <List
               anagrams={this.state.anagrams}
               getDefinition={this.getDefinition}
               getAnagrams={this.getAnagrams}
               showList={this.state}
-            />}
+            />)}
         </div>
       </div>
     );
   }
 }
-//['wordworth', 'warpathe', 'wrapper', 'willow', 'winow', 'trow', 'pow', 'ew']
 export default App;

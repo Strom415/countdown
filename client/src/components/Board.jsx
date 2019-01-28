@@ -3,48 +3,48 @@ import Timer from './Timer';
 
 const Board = props => (
   <div>
-    {/* {props.round === 'pre' && <div id="instructions">
-      <p>INSTRUCTIONS: </p> 
-      <p>Add 9 letters by clicking the vowel & consonant buttons below</p> 
-      <p>Click Start to begin the round</p>
-    </div>} */}
     <div id="timer">
       <Timer timer={props.timer} startTimer={props.startTimer} />
     </div>
     <div className="button" onClick={props.reset}>
-      <h1>New Game</h1>
+      <h1>
+        New Game
+      </h1>
     </div>
     <table id="board">
       <tr>
-        <td>{props.letters[0]}</td>
-        <td>{props.letters[1]}</td>
-        <td>{props.letters[2]}</td>
-        <td>{props.letters[3]}</td>
-        <td>{props.letters[4]}</td>
-        <td>{props.letters[5]}</td>
-        <td>{props.letters[6]}</td>
-        <td>{props.letters[7]}</td>
-        <td>{props.letters[8]}</td>
+        {['', '', '', '', '', '', '', '', ''].map((letter, i) => <td>{props.letters[i]}</td>)}
       </tr>
     </table>
     <div id="container">
-      {props.round === 'post' && <div id="score">
-        <div>
-          Best Word: <span className="best">{props.longest} </span>
-        </div>
-        <div>
-          Unique Words: <span className="best">{props.uniques}</span>
-        </div>
-      </div>}
+      {props.round === 'post' && (
+        <div id="score">
+          <div>
+            Best Word:
+            <span className="best">
+              {props.longest}
+            </span>
+          </div>
+          <div>
+            Unique Words:
+            <span className="best">
+              {props.uniques}
+            </span>
+          </div>
+        </div>)}
       <div className="letter">
-        <h2 id="vowel" onClick={props.addVowel}>Vowel</h2 >
+        <h2 id="vowel" onClick={props.addVowel}>
+          Vowel
+        </h2>
       </div>
       <div className="letter">
-        <h2  id="consonant" onClick={props.addConsonant}>Consonant</h2 >
+        <h2  id="consonant" onClick={props.addConsonant}>
+          Consonant
+        </h2>
       </div>
     </div>
     <div id="defContainer">
-      <span id="word">{props.definition.word} </span> 
+      <span id="word">{props.definition.word} </span>
       <span id="pos">{props.definition.pos} </span>
       <span id="def">{props.definition.def}</span>
     </div>
