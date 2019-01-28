@@ -25,6 +25,10 @@ h2 {
   text-align: center;
 }
 
+div:focus {
+  outline:0;
+}
+
 .anagram {
   padding: 2px;
   cursor: pointer;
@@ -363,6 +367,7 @@ h2 {
   color: #45eba5; 
   font-family: 'Chela One', cursive;
   font-size: 45px;
+  padding-left: 10px;
 }
 
 .points {
