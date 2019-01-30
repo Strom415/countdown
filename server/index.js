@@ -5,7 +5,7 @@ const wd = require('word-definition');
 const db = require('../db/index.js');
 
 const app = express();
-const port = 3088;
+const port = process.env.PORT || 3087;
 
 app.use(express.static(path.resolve(__dirname, '../public/dist')));
 app.use(bodyParser.json());
