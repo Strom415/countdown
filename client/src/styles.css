@@ -298,6 +298,7 @@ div:focus {
   font-family: 'Chela One', cursive;
   font-size: 45px;
   padding-left: 10px;
+  padding-right: 10px;
 }
 
 .points {

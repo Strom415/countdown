@@ -10,6 +10,10 @@ const Scoreboard = ({ longest, uniques }) => (
       </span>
     </div>
     <div>
+      {longest.length} letters
+      <span className="best">!</span>
+    </div>
+    <div>
       Unique Words:
       <span className="best">
         {uniques}

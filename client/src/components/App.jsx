@@ -15,7 +15,7 @@ class App extends React.Component {
       letters: [],
       longest: '',
       round: 'pre',
-      timer: 5,
+      timer: 45,
       uniques: 0,
     };
 
@@ -124,7 +124,7 @@ class App extends React.Component {
       definition: { word: 'Add 9 letters by clicking the vowel & consonant buttons above. Click Start to begin the round' },
       entries: [],
       letters: [],
-      timer: 1,
+      timer: 45,
     });
   }
 
