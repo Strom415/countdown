@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Teko|BenchNine|Chela+One');
+/* @import url('https://fonts.googleapis.com/css?family=Teko|BenchNine|Chela+One'); */
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -92,7 +92,7 @@ div:focus {
 
 #num {
   font-size: 75px;
-  font-family: 'Chela One', cursive;
+  /* font-family: 'Chela One', cursive; */
 }
 
 #pos {
@@ -101,7 +101,7 @@ div:focus {
 }
 
 #score {
-  font-family: 'Chela One', cursive;
+  /* font-family: 'Chela One', cursive; */
   position: absolute;
   padding: 10px;
   top: 5px;
@@ -154,7 +154,7 @@ div:focus {
 #start {
   padding-top: 15px;
   font-size: 30px;
-  font-family: 'Chela One', cursive;
+  /* font-family: 'Chela One', cursive; */
 }
 
 #timer {
@@ -209,7 +209,7 @@ div:focus {
   cursor: pointer;
   vertical-align: top;
   /* width: 30%; */
-  font-family: 'Chela One', cursive;
+  /* font-family: 'Chela One', cursive; */
   -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
@@ -236,7 +236,7 @@ div:focus {
 }
 
 .button {
-  font-family: 'Chela One', cursive;
+  /* font-family: 'Chela One', cursive; */
   position: absolute;
   border: 1px solid black;
   background-color: #45eba5;
@@ -295,7 +295,7 @@ div:focus {
 
 .best {
   color: #45eba5; 
-  font-family: 'Chela One', cursive;
+  /* font-family: 'Chela One', cursive; */
   font-size: 45px;
   padding-left: 10px;
   padding-right: 10px;
