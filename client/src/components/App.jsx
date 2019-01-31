@@ -134,6 +134,10 @@ class App extends React.Component {
     } = this.state;
     return (
       <div>
+        <span id="stamp">
+          game by
+          <a href="https://www.linkedin.com/in/matt-strom/" target="_blank">Matt Strom</a>
+        </span>
         <Board
           addLetter={this.addLetter}
           autofill={this.autofill}

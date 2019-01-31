@@ -25,6 +25,10 @@ h2 {
   text-align: center;
 }
 
+a {
+  padding-left: 7px;
+}
+
 div:focus {
   outline: 0;
 }
@@ -149,6 +153,14 @@ div:focus {
   position: absolute; top: 0; right: 0;
   text-align: center;
   width: 48px;
+}
+
+#stamp {
+  position: relative;
+  float: left;
+  padding-left: 30px;
+  font-size: 16px;
+  font-family: 'Chela One', cursive;
 }
 
 #start {
