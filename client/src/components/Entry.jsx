@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Entry = ({
-  addEntry, entries, entry, handleChange,
-}) => (
+const Entry = ({ addEntry, entries, entry, handleChange }) => (
   <div id="entries" className="column">
     <form id="search" onSubmit={addEntry}>
       <input

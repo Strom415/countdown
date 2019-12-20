@@ -2,52 +2,43 @@ const fs = require('fs');
 
 function Dictionary(file) {
   const words = fs.readFileSync(file, 'utf8').split('\n');
-  words.forEach((word) => { this[word.trim()] = 1; });
+  words.forEach((word) => this[word.trim()] = 1);
 }
 
-function findAnagrams(string) {
-  const anagrams = {};
+const  findAnagrams = string => {
+  const anagrams = new Set();
 
   const recurse = (ana, str) => {
-    if (str === '') { anagrams[ana] = 1; }
+    if (ana.length > 1) anagrams.add(ana);
 
     for (let i = 0; i < str.length; i++) {
       recurse(ana + str[i], str.slice(0, i) + str.slice(i + 1));
     }
   };
+
   recurse('', string);
 
-  return Object.keys(anagrams);
-}
+  return Array.from(anagrams);
+};
 
-function getPowerSet(str = '') {
-  const set = new Set();
+const sortAnagrams = anagrams => {
+  const sorted = [];
 
-  const recurse = (strSet) => {
-    set.add(strSet.join(''));
-    if (strSet.length === 1) { return; }
+  for (let i = 0; i < 9; i++) { 
+    sorted.push([]); 
+  }
 
-    for (let i = 0; i < strSet.length; i++) {
-      const subSet = strSet.slice(0, i).concat(strSet.slice(i + 1));
-      recurse(subSet);
-    }
-  };
-  recurse(str.split(''));
+  anagrams.forEach(anagram => sorted[anagram.length - 2].push(anagram));
+  sorted.map(partition => partition.sort());
 
-  return Array.from(set);
-}
+  return sorted;
+};
 
-function findAllAnagrams(str, dictionary, callback) {
-  let matches = new Set();
-
-  getPowerSet(str).forEach((subset) => {
-    findAnagrams(subset).forEach((anagram) => {
-      if (dictionary[anagram] === 1) { matches.add(anagram); }
-    });
-  });
-  matches = Array.from(matches).sort();
-  callback(matches);
-}
-
-module.exports.findAllAnagrams = findAllAnagrams;
+const findEnglishAnagrams = (letters, dictionary, callback) => {
+  const anagrams = findAnagrams(letters);
+  const englishAnagrams = anagrams.filter(sequence => dictionary[sequence]);
+  callback(sortAnagrams(englishAnagrams));
+};
+  
+module.exports.findEnglishAnagrams = findEnglishAnagrams;
 module.exports.Dictionary = Dictionary;
