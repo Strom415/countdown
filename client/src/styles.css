@@ -1,318 +1,335 @@
-@import url('https://fonts.googleapis.com/css?family=Teko|BenchNine|Chela+One');
+@import url('https://fonts.googleapis.com/css?family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Russo One', sans-serif;
 }
 
-td {
-  border: 1px solid black;
-  width: 120px; height: 120px;
-  font-size: 100px;
-  text-align: center;
-  background-color: #1d566e;
-  color: white;
-}
-
-h1 {
-  font-size: 30px;
-  text-align: center;
+button {
   cursor: pointer;
+  outline: none;
 }
 
-h2 {
-  position: relative;
-  width: 100%;
+.noHover{
+  pointer-events: none;
+}
+
+/* Navigation Bar */
+.navBar {
+  background-color: #4a4a4a;
+  border: 1px solid black;
+  color:white;
+  font: 20px 'Russo One', sans-serif;
+  height: 50px; width: 220px;
+  padding: 12px 0px;
+  position: absolute;
   text-align: center;
 }
 
-a {
-  padding-left: 7px;
+#newGame {
+  position: absolute;
+  border-radius: 6px;
 }
 
-div:focus {
-  outline: 0;
+#newGame:hover, #howToPlay:hover {
+  color: #3e3e3e;
+  background-color: white;
 }
 
-#board {
-  margin: auto;
+/* Game Board */
+.letterSquare {
+  border: 3px solid #3e3e3e;
+  color: #3e3e3e;
+  float:left;
+  font: 70px 'Roboto', sans-serif;
+  height: 97px; width: 97px;
+  margin-right: 3px;
+  padding-top: 5px;
+  text-align: center;
 }
 
-#consonent {
-  margin-left: 100px;
+#gameBoard {
+  margin-top: 70px;
+  position: absolute;
 }
 
-#autofill {
+/* Letter Generator */
+.lgButton {
+  border: 1px solid black;
+  height: 60px;
+  position: absolute;
+  text-align: center;
+}
+
+button.lgButton {
+  color: white;
+  font-family: 'Russo One', sans-serif;
   font-size: 30px;
-  height: 40px;
-  width: 150px;
-  border-radius: 7px;
-  margin-top: 40px;
+}
+
+#addLetterTab {
+  background-color: #3e3e3e;
+  border-radius: 6px 0px 0px 6px;
+  color: white;
+  font-size: 28px;
+  padding-top: 14px;
+  width: 98px;
+}
+
+#consonant {
+  background-color: #695c79;
+  border-radius: 0px 6px 6px 0px;
+  margin-left: 266px;
+  width: 240px;
+}
+
+#fillBoard {
+  background-color: #b57084;
+  border-radius: 6px 6px 6px 6px;
+  font-size: 18px;
+  margin-left: 524px;
+  width: 100px;
+}
+
+#letterGenerator {
+  position: absolute;
+  margin-top: 185px;
 }
 
 #vowel {
-  margin-left: 300px;
-  width: 200px;
+  background-color: #e67a82;
+  margin-left: 97px;
+  width: 170px;
 }
 
-#container {
-  max-width: 1024px;
-  margin: auto;
-  padding: 0;
-  position: relative;
+#consonant:hover {
+  background-color: #eeb39a;
+  color: #3e3e3e
 }
 
-#def {
-  font-size: 18px;
+#fillBoard:hover{
+  background-color: #eeb39a;
+  color: #3e3e3e
 }
 
-#defContainer {
-  width: auto;
-  font-size: 22px;
-  margin: auto;
-  text-align: center;
-  padding-bottom: 25px;
+#vowel:hover {
+  background-color: #eeb39a;
+  color: #3e3e3e;
 }
 
-#entries {
-  color: #163a5f;
-  left: -100px;
-  position: relative;
-  width: 400px;
-}
-
-#list {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #163a5f;
-  color: white;
-  position: absolute;
-  float: left;
-  width: auto;
-  left: 240px;
-  letter-spacing: 2px;
-  font-size: 18px;
-  font-weight: 200;
-  border-radius: 5px;
-}
-
-#num {
-  font-size: 75px;
-  font-family: 'Chela One', cursive;
-}
-
-#pos {
-  font-style: italic;
-  font-size: 16px;
-}
-
-#score {
-  font-family: 'Chela One', cursive;
-  position: absolute;
-  padding: 10px;
-  top: 5px;
-  left: -65px;
-  font-size: 30px;
-}
-
-#search {
-  display:block;
-  max-width: 256px;
-  position: relative;
-  text-align: right;
-  flex: 0 0 auto;
-}
-
-#search input,
-#search button {
-  display: inline-block;
-  line-height: 2rem;
-  margin: 0;
-	outline: none;
-  padding: 0;
-  vertical-align: top;
-}
-
-#search input {
-  border: 1px solid black;
-  border-radius: 3px;
-  box-sizing: border-box;
-  font-size: 0.875rem;
-  padding: 0 60px 0 12px;
-  width: 100%;
-  text-align: right;
-  color: #163a5f;
-  font-size: 20px;
-}
-
-#search button {
-  background-color: #45eba5;
-  border: 1px solid black;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  color: white;
-  font-size: 0.75rem;
-  position: absolute; top: 0; right: 0;
-  text-align: center;
-  width: 48px;
-}
-
-#stamp {
-  position: relative;
-  float: left;
-  padding-left: 30px;
-  font-size: 16px;
-  font-family: 'Chela One', cursive;
-}
-
+/* Timer */
 #start {
-  padding-top: 15px;
-  font-size: 30px;
-  font-family: 'Chela One', cursive;
+  background-color: #3e3e3e;
+  color: white;
+  border: 1px solid black;
+  border-radius: 6px 0px 0px 6px;
+  font: 18px 'Russo One', sans-serif;
+  height: 60px; width: 140px;
+  margin-left: 681px;
+  position: absolute;
+  transition: .2;
+}
+
+#start:hover {
+  color: #3e3e3e;
+  background-color: white;
 }
 
 #timer {
-  border: 2px solid black;
-  background-color: #45eba5;
-  height:150px; width:150px;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  cursor: pointer;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 0px 6px 6px 0px;
+  color: #3e3e3e;
+  font: 30px 'Russo One', sans-serif;
+  height: 60px; width: 80px;
+  margin-left: 820px;
+  padding-top: 12px;
+  position: absolute;
+}
+
+#timerWrapper {
+  position: absolute;
+  margin-top: 185px;
   text-align: center;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  transition: all .3s ease-in-out;
-  border-radius: 5px;
 }
 
-#timer:hover { 
-  border: 2px solid black;
-  background-color: #163a5f;
-  transform: scale(1.05);
+/* Entry Input */
+#addEntry {
+  background-color:#b57084;
+  border: 1px solid black;
+  border-radius: 0px 3px 3px 0px;
   color: white;
+  font-size: 13px;
+  height: 30px; width: 40px;
+  margin-left: 210px;
+  padding: 0px;
+  position: absolute;
 }
 
-#timer:active {
-  background-color:tomato;
+#entryForm {
+ height: 20px; width: 250px;
 }
 
+#input {
+  border: 1px solid black;
+  border-radius: 3px 0px 0px 3px;
+  color: #3e3e3e;
+  font-size: 18px;
+  font-weight: bold;
+  height: 30px; width: 211px;
+  outline: none;
+  padding-right: 10px;
+  position: absolute;
+  text-align: right;
+}
+
+/* Entry List */
+.correct {
+  color: #3e3e3e;
+}
+
+.incorrect {
+  color: #e67a82;
+  text-decoration: line-through;
+}
+
+#entryList {
+  float:right;
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  text-align: right;
+}
+
+/* Anagram Board  */
+.anagram {
+  cursor: pointer;
+}
+
+.anagram:hover {
+  color: #919191
+}
+
+.activeAnagram {
+  color: #eeb39a;
+}
+
+.anagramTab {
+  background-color: #e67a82;
+  color: #3e3e3e;
+  border: 1px solid white;
+  border-right: 0px;
+  border-top: 0px;
+  height: 35px; width: 78px;
+  float: left;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+#anagramBoard {
+  background-color: #3e3e3e;
+  border-radius: 8px;
+  color: white;
+  columns: 130px 4;
+  font-size: 18px;
+  height: auto; width: 623px;
+  letter-spacing: 1.4px;
+  line-height: 1.6;
+  margin-left: 277px;
+  margin-bottom: 50px;
+  padding-top: 60px;
+  padding-bottom: 20px;
+  position: absolute;
+  text-align: center;
+}
+
+.active {
+  background-color: #b57084;
+  color: white;
+  font-size: 20px;
+  padding-top: 6px;
+}
+
+.empty {
+  background-color: lightgrey;
+  color: grey;
+}
+
+#anagramNavBar {
+  margin-left: 276px;
+  position: absolute;
+  text-align: center;
+  z-index: 1;
+}
+
+#tab2 {
+  border-radius: 8px 0px 0px 0px;
+}
+
+#tab9 {
+  border-radius: 0px 8px 0px 0px;
+}
+
+/* Definition Bar */
+#dictionaryData{
+  font-family: 'Roboto Mono', monospace;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  width: 900px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+#definition{
+  font-size: 16px;
+  margin-left: 15px;
+}
+
+#category {
+  font-size: 12px;
+  font-style: italic;
+  margin-left: 15px;
+}
 #word {
   font-weight: bold;
+  font-size: 20px;
 }
 
-#words {
- text-align: center;
- padding-top: 20px;
- position: relative;
- float: left;
-}
-
-.anagram {
-  padding: 2px 15px 2px 15px;
-  cursor: pointer;
-}
-
-.letterButtonContainer {
-  display: inline-block;
-  color: #45eba5;
-  font-size: 30px;
-  cursor: pointer;
-  vertical-align: top;
-  /* width: 30%; */
-  font-family: 'Chela One', cursive;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-}
-
-.letterButton {
-  border: 1px solid black;
-  background-color: #45eba5;
-  color: black;
-  height:60px;
-  width:275px;
-  border-radius: 7px;
-  margin-left: 15px;
-  padding-top:10px;
-  transition: all .3s ease-in-out;
-}
-
-.letterButton:hover { 
-  border: 1px solid #21aba5;
-  background-color: #163a5f;
-  transform: scale(1.05);
-  color: white;
-}
-
-.button {
-  font-family: 'Chela One', cursive;
-  position: absolute;
-  border: 1px solid black;
-  background-color: #45eba5;
-  width: 170px;
-  margin-left: 1088px;
-  margin-top: -75px;
-  padding-left: 8px;
-  padding-right: 8px;
-  cursor: pointer;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  transition: all .3s ease-in-out;
-  border-radius: 4px;
-}
-
-.button:hover {
-  color: white;
-  background-color: #163a5f;
-  transform: scale(1.05);
- }
-
-.column {
-  display: inline-block;
-  vertical-align: top;
-  width: 50%;
+/* Containers */
+#bottomContainer {
   position: relative;
-  float: left;
+  background-color: pink;
 }
 
-.allEntries {
-  font-size: 30px;
-  font-weight: 800;
-  padding-top: 12px;
-  text-align: right;
-  margin-right: 200px;
+#entryContainer {
+  position:absolute;
+  width: 250px;
 }
 
-.correct {
-  font-weight: bold;
+#middleContainer {
+  position:relative;
+  height: 80px;
+  overflow: hidden;
 }
 
-.wrong {
-  text-decoration: line-through;
-  color:#ff5e42;
+#upperContainer {
+  height: 245px;
+  margin-top: 150px;
 }
 
-.listCol {
-  display: inline;
-  width: auto;
-  float:left;
+#gameContainer {
+  margin: auto;
   position: relative;
-}
-
-
-.best {
-  color: #45eba5; 
-  font-family: 'Chela One', cursive;
-  font-size: 45px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.points {
-  color: #45eba5; 
+  width: 900px;
 }

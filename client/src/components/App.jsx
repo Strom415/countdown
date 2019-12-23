@@ -1,76 +1,113 @@
 import React from 'react';
 import axios from 'axios';
-import Board from './Board';
-import Entry from './Entry';
-import List from './List';
+import AnagramBoard from './AnagramBoard';
+import AnagramNavBar from './AnagramNavBar';
+import DefinitionBar from './DefinitionBar';
+import EntryForm from './EntryForm';
+import EntryList from './EntryList';
+import GameBoard from './GameBoard';
+import LetterGenerator from './LetterGenerator';
+import NavBar from './NavBar';
+import Timer from './Timer';
 import letterPools from '../letterPools.js';
+import mwkey from '../mwkey.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      anagrams: [],
-      definition: { word: 'Add 9 letters by clicking the vowel & consonant buttons above. Click Start to begin the round' },
+      activeAnagram: '',
+      activeTab: 2,
+      anagrams: {},
+      dictionaryData: { definition: `Click on a word to see it's definition` },
       entry: '',
       entries: [],
-      letters: ['W', 'E', 'A', 'S', 'R', 'T', 'E', 'N', 'O'],
-      longest: '',
+      letters: [],
       round: 'pre',
-      timer: 45,
-      uniques: 0,
+      timer: 60,
     };
   }
 
   //server requests
   getAnagrams = () => {
-    const { letters } = this.state;
-    const query = letters.join('').toLowerCase();
+    const letters = this.state.letters.join('').toLowerCase();
 
-    axios.get('/anagrams', { params: { data: query } })
-      .then(res => this.setState({ anagrams: res.data }));
+    axios.get('/anagrams', { params: { letters } })
+      .then(res => this.setState({ anagrams: res.data }), () => { console.log(this.state.anagrams) })
+      .catch(err => console.log(err));
   }
 
   getDefinition = e => {
-    const query = e.target.textContent;
+    let word = e.target.textContent;
+    axios.get(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${mwkey}`)
+      .then(res => {
+        if (res.data[0].shortdef && res.data[0].shortdef.length) {
+          const { meta, fl, shortdef } = res.data[0];
+          let definition = shortdef[0].slice(0, 210);
+          if (definition.length === 210) definition = definition + '...';
+          word = meta.id.split(':')[0];
+          this.setState({ dictionaryData: { category: fl, definition, word } });
+        } else {
+          this.getWikiDefinition(word);
+        }
 
-    axios.get('/definition', { params: { data: query } })
-      .then(res => this.setState({
-        definition: { word: res.data.word, pos: res.data.category, def: res.data.definition },
-      }));
+      })
+      .catch(err => console.log(err));
+  }
+
+  getWikiDefinition = word => {
+    axios.get('/definition', { params: { word } })
+      .then(res => {
+        let { category, definition, word } = res.data;
+        definition = definition === undefined ? `no definition found` : definition.slice(0, 210);
+        if (definition.length === 210) definition = definition + `...`;
+        if (word === `English` && res.config.params.word !== `English`) {
+          definition = `no definition found`;
+          category = ``;
+          word = res.config.params.word;
+        }
+        this.setState({ dictionaryData: { category, definition, word } });
+      });
   }
 
   // gameboard functions
   addLetter = (e, autofill) => {
-    const { letters } = this.state;
-
+    let { letters } = this.state;
+    const count = this.countConsAndVows();
+    
     if (letters.length < 9) {
-      const pool = e.target.id === 'vowel' ? letterPools.vows : letterPools.cons;
-      const letter = pool[Math.floor(Math.random() * pool.length)];
-      this.setState({ letters: letters.concat(letter) }, autofill);
+      if (!(count.vows === 5 && e.target.id === 'vowel') && 
+          !(count.cons === 6 && e.target.id === 'consonant')) {
+        const pool = e.target.id === 'vowel' ? letterPools.pools.vows : letterPools.pools.cons;
+        letters = letters.concat(pool[Math.floor(Math.random() * pool.length)]);
+      }
+      this.setState({ letters }, autofill);
     }
   }
 
+  countConsAndVows = () => {
+    const { letters } = this.state;
+    const count = { vows: 0, cons: 0 };
+    letters.forEach(letter => letterPools.weights.vows[letter] ? count.vows += 1 : count.cons +=1);
+    return count;
+  }
+
   autofill = () => {
-    const type = Math.random() < .55 ? 'vowel' : 'consonant';
+    const type = Math.random() > .55 ? 'vowel' : 'consonant';
     this.addLetter({ target: { id: type } }, this.autofill);
   }
 
   // user entry functions
-  handleChange = e => {
-    this.setState({ entry: e.target.value });
-  }
+  handleChange = e => this.setState({ entry: e.target.value });
 
   addEntry = e => {
-    const { entries, entry, round } = this.state;
-    
-    if (round === 'active') {
-      this.setState({
-        entries: [{ word: entry.toLowerCase(), class: 'entry' }].concat(entries),
-        entry: '',
-      });
-    }
-
+    let { entries, entry, round } = this.state;
     e.preventDefault();
+
+    if (round === 'active') {
+      entries = [{ word: entry.toLowerCase(), class: 'correct' }].concat(entries);
+      this.setState({ entries, entry: '' });
+    }
   }
 
   checkEntries = () => {
@@ -78,95 +115,134 @@ class App extends React.Component {
     let { entries } = this.state;
 
     entries = entries.map(entry =>
-      entry.word.length > 1 && entry.word.length < 10 && anagrams[entry.word.length - 2].includes(entry.word) ?
+      anagrams[entry.word.length] && anagrams[entry.word.length].includes(entry.word) ?
         { class: 'correct', word: entry.word } :
-        { class: 'wrong', word: entry.word });
+        { class: 'incorrect', word: entry.word });
 
     this.setState({ entries });
   }
 
-  getLongest() {
-    let longest = '';
+  // anagram board functions
+  handleAnagramClick = e => {
+    this.targetAnagram(e);
+    this.getDefinition(e);
   }
 
-  countCorrectWords() {
-    const uniques = new Set();
+  setActiveTab = () => {
+    const { anagrams } = this.state;
+    for (let i = 9; i >=2; i--) {
+      if (anagrams[i].length) {
+        this.setState({ activeTab: i });
+        return;
+      }
+    }
+  }
+
+  focusBoard = () => document.getElementById('anagramContainer').focus()
+
+  targetAnagram = e => this.setState({ activeAnagram: e.target.textContent })
+
+  displayTab = e => {
+    if (!e.target.className.split(' ').includes('empty')) {
+      this.setState({ activeTab: e.target.id[3] });
+    }
+  }
+
+  switchTab = (e) => {
+    let { activeTab, anagrams } = this.state;
+    if (e.key === 'ArrowLeft' && activeTab > 2 && anagrams[activeTab - 1].length) activeTab -= 1;
+    if (e.key === 'ArrowRight' && activeTab < 9 && anagrams[activeTab + 1].length) activeTab += 1;
+    this.setState({ activeTab });
   }
 
   // timer functions
+  focusInput = () => document.getElementById('input').focus()
+
+  endRound = () => {
+    clearInterval(this.intervalId);
+    this.checkEntries();
+    this.setActiveTab();
+    this.setState({ round: 'post', entry: '' }, this.focusBoard);
+  }
+
   tick = () => {
-    const { round, timer } = this.state;
-    if (timer === 0) {
-      clearInterval(this.intervalHandle);
-      this.checkEntries();
-      this.setState({
-        definition: { word: 'click a word to see its definition' },
-        round: 'post',
-      });
-    } else { 
-      this.setState({ timer: timer - 1 }); 
-    }
+    const { timer } = this.state;
+    if (timer === 1) this.endRound();
+    this.setState({ timer: timer - 1 });
   }
 
   startTimer = () => {
     const { letters, round } = this.state;
     if (round === 'pre' && letters.length === 9) {
-      document.getElementById('input').focus();
+      this.focusInput();
       this.getAnagrams();
-      this.setState({ round: 'active', definition: { pos: 'good luck' } });
-      this.intervalHandle = setInterval(this.tick, 1000);
+      this.intervalId = setInterval(this.tick, 1000);
+      this.setState({ round: 'active' });
     }
   }
 
   reset = () => {
-    clearInterval(this.intervalHandle);
+    clearInterval(this.intervalId);
     this.setState({
       round: 'pre',
-      anagrams: [],
-      definition: { word: 'Add 9 letters by clicking the vowel & consonant buttons above. Click Start to begin the round' },
+      anagrams: {},
+      definition: { definition: `Click on a word to see it's definition` },
       entries: [],
       letters: [],
-      timer: 3,
+      timer: 60,
     });
   }
 
   render() {
-    const {
-      anagrams, definition, entries, entry, letters, longest, round, timer, uniques,
-    } = this.state;
+    const { addEntry, addLetter, autofill, displayTab, handleAnagramClick, handleChange, reset, startTimer, switchTab } = this;
+    const { activeAnagram, activeTab, anagrams, dictionaryData, entries, entry, letters, round, timer } = this.state;
     return (
-      <div>
-        <span id="stamp">
-          game by
-          <a href="https://www.linkedin.com/in/matt-strom/" target="_blank">Matt Strom</a>
-        </span>
-        <Board
-          addLetter={this.addLetter}
-          autofill={this.autofill}
-          definition={definition}
-          letters={letters}
-          longest={longest}
-          reset={this.reset}
-          round={round}
-          startTimer={this.startTimer}
-          timer={timer}
-          uniques={uniques}
-        />
-        <div id="container">
-          <Entry
-            addEntry={this.addEntry}
-            entries={entries}
-            entry={entry}
-            handleChange={this.handleChange}
-          />
-          {round === 'post' && (
-            <List
-              anagrams={anagrams}
-              getDefinition={this.getDefinition}
-            />)}
+      <div id='gameContainer'>
+        <div id='upperContainer'>
+          <NavBar
+            reset={reset} />
+          <GameBoard
+            letters={letters} />
+          <LetterGenerator
+            addLetter={addLetter}
+            autofill={autofill}
+            round={round} />
+          <Timer
+            round={round}
+            startTimer={startTimer}
+            timer={timer} />
+        </div>
+        <div id='middleContainer'>
+          {round === 'post' &&
+            <DefinitionBar
+              dictionaryData={dictionaryData} />}
+        </div>
+        <div id='bottomContainer'>
+          <div id='entryContainer'>
+            <EntryForm
+              addEntry={addEntry}
+              entry={entry}
+              handleChange={handleChange}
+              round={round} />
+            <EntryList
+              entries={entries} />
+          </div>
+          {round === 'post' &&
+            <div id='anagramContainer' onKeyDown={switchTab} tabIndex='0'>
+              <AnagramNavBar
+                activeTab={activeTab}
+                anagrams={anagrams}
+                displayTab={displayTab} />
+              <AnagramBoard
+                activeAnagram={activeAnagram}
+                activeTab={activeTab}
+                anagrams={anagrams}
+                handleAnagramClick={handleAnagramClick} />
+            </div>}
         </div>
       </div>
     );
   }
 }
+
 export default App;

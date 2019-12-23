@@ -1,19 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const Timer = ({ startTimer, timer }) => (
-  <div onClick={startTimer} onKeyDown={startTimer} role="button" tabIndex={0}>
-    <div id="start">
-      Start
-    </div>
-    <div id="num">
-      {timer}
-    </div>
+const Timer = ({ round, startTimer, timer }) => (
+  <div id='timerWrapper'>
+    <button 
+      className={round === 'pre' ? '' : 'noHover'}
+      id='start'
+      onClick={startTimer}>{round === 'pre' && `Start round`}
+    </button>
+    <div id='timer'>{timer}</div>
   </div>
 );
 
-Timer.propTypes = {
-  startTimer: PropTypes.func.isRequired,
-  timer: PropTypes.number.isRequired,
-};
 export default Timer;

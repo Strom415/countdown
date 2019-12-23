@@ -11,11 +11,7 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      },
+      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.html$/, use: { loader: "html-loader" } },
       { test: /\.css$/, use: [MiniCssExtractPlugin.loader, "css-loader"] }
     ]

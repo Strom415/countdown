@@ -41,9 +41,10 @@ const makePool = weights => {
   return pool
 }
 
-const letterPools = {
+const pools = {
   cons: makePool(weights.cons),
   vows: makePool(weights.vows),
 };
 
-module.exports = letterPools;
+module.exports.pools = pools;
+module.exports.weights = weights;
